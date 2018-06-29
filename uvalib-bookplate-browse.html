@@ -72,7 +72,7 @@
     </div>
     <div class="recent layout horizontal wrap center-justified shady">
       <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
-        <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
+        <paper-card image="[[_imageFallback(item.bookplateImage.url)]]" alt="[[_altFallback(item.bookplateImage.alt)]]">
           <div class="card-content">
             <h3>[[item.title]]</h3>
           </div>
@@ -110,6 +110,12 @@
         parentTemplate.content.insertBefore(childTemplate.content,null);
         return parentTemplate;
        }
+      _altFallback(alt){
+        return (alt)? alt:"University of Virginia Library Bookplate image";
+      }
+      _imageFallback(image){
+        return (image)? image:"https://static.lib.virginia.edu/files/generic-bookplate.png";
+      }
       _viewBookplates(){
         if (this.bookplates)
           if (this.recent)
