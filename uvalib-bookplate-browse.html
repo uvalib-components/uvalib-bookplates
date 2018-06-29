@@ -20,9 +20,10 @@
         }
         .view-buttons paper-button {
           height: calc(var(--uvalib-spacing-unit)*3);
+          background-color: white;
         }
         paper-card {
-          max-width: 27vw;
+          max-width: 30%;
 
         }
         .card-content h3 {
@@ -32,14 +33,13 @@
           padding-left: 0;
         }
 
-
       </style>
     </custom-style>
 
     <uva-library path="bookplates" last-response="{{bookplates}}"></uva-library>
 
     <slot></slot>
-    <div class="layout horizontal wrap justified" style="background-color: grey;">
+    <div class="layout horizontal wrap center-justified shady">
       <uvalib-simple-search-box action="https://www.library.virginia.edu/bookplates/search" query-name="q"></uvalib-simple-search-box>
       <div class="view-buttons">
         <paper-button hidden$="[[!recent]]" on-tap="_toggleRecent">View All Funds</paper-button>
