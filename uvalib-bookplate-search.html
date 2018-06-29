@@ -19,26 +19,34 @@
     <iron-location query="{{_qs}}"></iron-location>
     <iron-query-params params-string="{{_qs}}" params-object="{{params}}"></iron-query-params>
 
-    <div class="layout horizontal">
-      [[params.query]]
-      <uvalib-simple-search-box on-submit="_pullQuery" value="{{query}}"></uvalib-simple-search-box>
-      <div>
-        <a tabindex="-1" href="/bookplates"><paper-button hidden$="[[!recent]]" on-tap="_toggleRecent">View All Funds</paper-button></a>
+    <div class="upper">
+      <p>
+        Your search term "[[params.query]]" returned the following results:
+      </p>
+      <div class="results">
+        <template is="dom-repeat" items="[[_searchBookplates(params.query,bookplates)]]">
+          <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
+            <div class="card-content">
+              <h3>[[item.title]]</h3>
+            </div>
+            <div class="card-actions">
+              <a href="[[_mkBookplateURL(item.fundID)]]" tabindex="-1"><paper-button>View More</paper-button></a>
+            </div>
+          </paper-card>
+        </template>
       </div>
     </div>
 
-    <div class="results">
-      <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
-        <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
-          <div class="card-content">
-            <h3>[[item.title]]</h3>
-          </div>
-          <div class="card-actions">
-            <a href="[[_mkBookplateURL(item.fundID)]]" tabindex="-1"><paper-button>View More</paper-button></a>
-          </div>
-        </paper-card>
-      </template>
+    <div class="lower">
+      <h2>Search E-bookplates funds again</h2>
+      <div class="layout horizontal">
+        <uvalib-simple-search-box on-submit="_pullQuery" value="{{query}}"></uvalib-simple-search-box>
+        <div>
+          <a tabindex="-1" href="/bookplates"><paper-button>View All Funds</paper-button></a>
+        </div>
+      </div>
     </div>
+
   </template>
 
   <script>
@@ -69,14 +77,10 @@
       _pullQuery(e){
         this.set('params.query', e.currentTarget.value);
       }
-      _viewBookplates(){
+      _searchBookplates(query){
         if (this.bookplates)
-          if (this.recent)
-            // ToDo: when dates are added, need to sort on those
-            return this.bookplates.slice(1,8);
-          else {
+            // Todo: filter by query
             return this.bookplates;
-          }
       }
       _mkBookplateURL(fundID){
         return "/bookplates/"+fundID;
