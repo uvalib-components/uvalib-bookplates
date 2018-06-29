@@ -115,10 +115,12 @@
         this.set('params.q', e.currentTarget.value);
       }
       _searchBookplates(query){
-        var q = query.toLowerCase();
-        if (this.bookplates && q)
-            // Todo: filter by query
-            return this.bookplates.filter(bp => (bp.title && bp.title.toLowerCase().includes(q))||(bp.summary && bp.summary.toLowerCase().includes(q)));
+        if (query) {
+          var q = query.toLowerCase();
+          if (this.bookplates && q)
+              // Todo: filter by query
+              return this.bookplates.filter(bp => (bp.title && bp.title.toLowerCase().includes(q))||(bp.summary && bp.summary.toLowerCase().includes(q)));
+        }
       }
       _mkBookplateURL(fundID){
         return "/bookplates/"+fundID;
