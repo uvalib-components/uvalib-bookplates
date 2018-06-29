@@ -14,7 +14,7 @@
       <style include="uvalib-theme iron-flex uvalib-card-style uvalib-page-style">
 
         uvalib-simple-search-box {
-          /* --uvalib-background-search: blue; */
+          --uvalib-background-search: var(--uvalib-main-jefferson-blue);
         }
         .view-buttons {
           margin: calc(var(--uvalib-spacing-unit)/2) var(--uvalib-spacing-unit);
@@ -22,6 +22,8 @@
         .view-buttons paper-button {
           height: calc(var(--uvalib-spacing-unit)*3);
           background-color: white;
+          /* margin-top: var(--uvalib-spacing-unit);
+          margin-bottom: var(--uvalib-spacing-unit); */
         }
         paper-card {
           max-width: 30%;
@@ -36,14 +38,17 @@
         .bookplate-search.shady {
           background-color: var(--uvalib-secondary-md-grey);
           margin-top: calc(var(--uvalib-spacing-unit)*2);
-          padding: var(--uvalib-spacing-unit) 0;
+          padding-top: calc(var(--uvalib-spacing-unit)*1);
+          padding-bottom: calc(var(--uvalib-spacing-unit)*1);
+
         }
         .bookplate-intro::slotted(*) {
-          float: right;
-          width: 80%;
+          /* float: right;
+          width: 80%; */
         }
 
         .recent.shady {
+          padding-top: calc(var(--uvalib-spacing-unit)*2);
           padding-bottom: calc(var(--uvalib-spacing-unit)*2);
         }
 
