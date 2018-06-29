@@ -9,7 +9,7 @@
 <dom-module id="uvalib-bookplate-list-items">
   <template>
     <custom-style>
-      <style include="uvalib-theme iron-flex"></style>
+      <style include="uvalib-theme iron-flex uvalib-page-style"></style>
     </custom-style>
     <iron-ajax auto url="http://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D=SAS-YY00196&sort_key=received" handle-as="json" last-response="{{_catresponse}}"></iron-ajax>
     <template is="dom-if" if="[[_catresponse]]">
