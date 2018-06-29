@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="uvalib-bookplate-search-browse">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `uvalib-bookplate-search-browse`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UvalibBookplateSearchBrowse extends Polymer.Element {
+      static get is() { return 'uvalib-bookplate-search-browse'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'uvalib-bookplate-search-browse'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(UvalibBookplateSearchBrowse.is, UvalibBookplateSearchBrowse);
+  </script>
+</dom-module>

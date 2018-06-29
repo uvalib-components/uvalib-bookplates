@@ -1,0 +1,59 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="./uvalib-theme.uvalib-theme.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="uvalib-bookplate-list-items">
+  <template>
+    <custom-style>
+      <style include="uvalib-theme iron-flex"></style>
+    </custom-style>
+    <iron-ajax auto url="http://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D=SAS-YY00196&sort_key=received" handle-as="json" last-response="{{_catresponse}}"></iron-ajax>
+    <template is="dom-if" if="[[_catresponse]]">
+      <template is="dom-repeat" items="[[_catresponse.response.docs]]">
+        <iron-ajax auto url="[[_getCoverURL(item.id)]]" last-response="{{item.coverimage}}"></iron-ajax>
+        <paper-card image="[[item.coverimage.image_base64]]">
+          <div class="card-content">
+            <h3>[[item.title_display]]</h3>
+          </div>
+          <div class="card-actions">
+            <a href="[[_mkItemURL(item.id)]]" tabindex="-1"><paper-button>View More</paper-button></a>
+          </div>
+        </paper-card>
+      </template>
+    </template>
+  </template>
+
+  <script>
+    /**
+     * `uvalib-bookplate-list-items`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/list.html
+     */
+    class UvalibBookplateListItems extends Polymer.Element {
+      static get is() { return 'uvalib-bookplate-list-items'; }
+      static get properties() {
+        return {
+          fundId: {
+            type: String,
+            value: 'WYLLIE-ER00621'
+          }
+        };
+      }
+      _getCoverURL(id) {
+        return "https://api.devhub.virginia.edu/v1/library/catalog/covers/"+id;
+      }
+      _mkItemURL(id) {
+        return "http://search.lib.virginia.edu/catalog/"+id;
+      }
+    }
+
+    window.customElements.define(UvalibBookplateListItems.is, UvalibBookplateListItems);
+  </script>
+</dom-module>
