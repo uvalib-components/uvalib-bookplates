@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../uvalib-theme/uvalib-ui-element.html">
 <link rel="import" href="../uvalib-theme/uvalib-theme.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
@@ -58,10 +58,10 @@
      * @polymer
      * @demo demo/index.html
      */
-    class UvalibBookplateSearch extends Polymer.Element {
+    class UvalibBookplateSearch extends UvalibUiElement {
       static get is() { return 'uvalib-bookplate-search'; }
       static get properties() {
-        return {
+        return Object.assign(super.properties,{
           params: {
             type:Object,
             observer: '_updatequery'
@@ -69,7 +69,14 @@
           query: {
             type: String
           }
-        };
+        });
+      }
+      //Concat the this elements template with the parents
+      static get template() {
+        var parentTemplate = UvalibUiElement.template.cloneNode(true);
+        var childTemplate = Polymer.DomModule.import('uvalib-bookplate-search', 'template');
+        parentTemplate.content.insertBefore(childTemplate.content,null);
+        return parentTemplate;
       }
       _updatequery(){
         this.query = this.params.q;

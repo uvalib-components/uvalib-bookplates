@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../uvalib-theme/uvalib-ui-element.html">
 <link rel="import" href="../uvalib-theme/uvalib-theme.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
@@ -46,15 +46,22 @@
      * @polymer
      * @demo demo/index.html
      */
-    class UvalibBookplateBrowse extends Polymer.Element {
+    class UvalibBookplateBrowse extends UvalibUiElement {
       static get is() { return 'uvalib-bookplate-browse'; }
       static get properties() {
-        return {
+        return Object.assign(super.properties,{
           recent: {
             type: Boolean,
             value: true
           }
-        };
+        });
+      }
+      //Concat the this elements template with the parents
+      static get template() {
+        var parentTemplate = UvalibUiElement.template.cloneNode(true);
+        var childTemplate = Polymer.DomModule.import('uvalib-bookplate-browse', 'template');
+        parentTemplate.content.insertBefore(childTemplate.content,null);
+        return parentTemplate;
       }
       _viewBookplates(){
         if (this.bookplates)
