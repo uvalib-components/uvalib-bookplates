@@ -56,7 +56,10 @@
       </div>
     </div>
 
-    <div hidden$="[[!_thereAreResults(results)]]">
+    <div hidden$="[[!_sorry(query,_resultsBoolean)]]">
+      <h2>Your search term "[[params.q]]" returned no results.</h2>
+    </div>
+    <div hidden$="[[!_resultsBoolean]]">
       <h2>Your search term "[[params.q]]" returned the following results:</h2>
       <div class="results layout horizontal wrap center-justified">
         <template is="dom-repeat" items="[[results]]">
@@ -98,7 +101,12 @@
           },
           results: {
             type: Array,
-            computed: '_searchBookplates(params.q,bookplates)'
+            computed: '_searchBookplates(params.q,bookplates)',
+            observer: '_areResults'
+          },
+          _resultsBoolean: {
+            type: Boolean,
+            value: false
           }
         });
       }
@@ -109,8 +117,11 @@
         parentTemplate.content.insertBefore(childTemplate.content,null);
         return parentTemplate;
       }
-      _thereAreResults(results){
-        return (results && results.length > 0);
+      _sorry(){
+        return this.query && !this._resultsBoolean;
+      }
+      _areResults(){
+        this._resultsBoolean = (this.results && this.results.length > 0);
       }
       _updatequery(){
         this.query = this.params.q;
@@ -125,6 +136,7 @@
               // Todo: filter by query
               return this.bookplates.filter(bp => (bp.title && bp.title.toLowerCase().includes(q))||(bp.summary && bp.summary.toLowerCase().includes(q)));
         }
+        return null;
       }
       _mkBookplateURL(fundID){
         return "/bookplates/"+fundID;
