@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div hidden$="[[!results]]">
+    <div hidden$="[[!_thereAreResults(results)]]">
       <h2>Your search term "[[params.q]]" returned the following results:</h2>
       <div class="results layout horizontal wrap center-justified">
         <template is="dom-repeat" items="[[results]]">
@@ -107,6 +107,9 @@
         var childTemplate = Polymer.DomModule.import('uvalib-bookplate-search', 'template');
         parentTemplate.content.insertBefore(childTemplate.content,null);
         return parentTemplate;
+      }
+      _thereAreResults(results){
+        return (results && results.length > 0);
       }
       _updatequery(){
         this.query = this.params.q;
