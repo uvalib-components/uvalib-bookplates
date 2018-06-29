@@ -35,7 +35,7 @@
       }
       </style>
     </custom-style>
-    <iron-ajax auto url="https://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D=SAS-YY00196&sort_key=received" handle-as="json" last-response="{{_catresponse}}"></iron-ajax>
+    <iron-ajax auto url="[[_getFeedURL(fundId)]]" handle-as="json" last-response="{{_catresponse}}"></iron-ajax>
     <div class="bookplate-purchase-header shady">
         <h2>Virgo items purchased with this fund</h2>
     </div>
@@ -81,6 +81,9 @@
         var childTemplate = Polymer.DomModule.import('uvalib-bookplate-list-items', 'template');
         parentTemplate.content.insertBefore(childTemplate.content,null);
         return parentTemplate;
+      }
+      _getFeedURL(fundCode) {
+        return "https://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D="+fundCode+"&sort_key=received";
       }
       _getCoverURL(id) {
         return "https://api.devhub.virginia.edu/v1/library/catalog/covers/"+id;
