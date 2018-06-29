@@ -47,7 +47,7 @@
         <paper-button hidden$="[[recent]]" on-tap="_toggleRecent">View Recent Funds</paper-button>
       </div>
     </div>
-    <div class="recent layout horizontal wrap">
+    <div class="recent layout horizontal wrap center-justified">
       <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
         <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
           <div class="card-content">
@@ -85,7 +85,7 @@
         var parentTemplate = UvalibUiElement.template.cloneNode(true);
         var childTemplate = Polymer.DomModule.import('uvalib-bookplate-browse', 'template');
         parentTemplate.content.insertBefore(childTemplate.content,null);
-        return parentTemplate;	
+        return parentTemplate;
        }
       _viewBookplates(){
         if (this.bookplates)
