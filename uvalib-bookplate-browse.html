@@ -14,7 +14,7 @@
       <style include="uvalib-theme iron-flex uvalib-card-style uvalib-page-style">
 
         uvalib-simple-search-box {
-          --uvalib-background-search: blue;
+          /* --uvalib-background-search: blue; */
         }
         .view-buttons {
           margin: calc(var(--uvalib-spacing-unit)/2) var(--uvalib-spacing-unit);
@@ -33,21 +33,39 @@
           line-height: 1.2;
           padding-left: 0;
         }
+        .bookplate-search.shady {
+          background-color: var(--uvalib-secondary-md-grey);
+          margin-top: calc(var(--uvalib-spacing-unit)*2);
+          padding: var(--uvalib-spacing-unit) 0;
+        }
+        .bookplate-intro::slotted(*) {
+          float: right;
+          width: 80%;
+        }
+
+        .recent.shady {
+          padding-bottom: calc(var(--uvalib-spacing-unit)*2);
+        }
+
+        :host([small-screen]) .bookplate-intro::slotted(*), :host([medium-screen]) .bookplate-intro::slotted(*) {
+          width: 100%;
+        }
+
 
       </style>
     </custom-style>
 
     <uva-library path="bookplates" last-response="{{bookplates}}"></uva-library>
 
-    <slot></slot>
-    <div class="layout horizontal wrap center-justified shady">
+    <slot class="bookplate-intro"></slot>
+    <div class="bookplate-search layout horizontal wrap center-justified shady">
       <uvalib-simple-search-box action="https://www.library.virginia.edu/bookplates/search" query-name="q"></uvalib-simple-search-box>
       <div class="view-buttons">
-        <paper-button hidden$="[[!recent]]" on-tap="_toggleRecent">View All Funds</paper-button>
-        <paper-button hidden$="[[recent]]" on-tap="_toggleRecent">View Recent Funds</paper-button>
+        <paper-button raised hidden$="[[!recent]]" on-tap="_toggleRecent">View All Funds</paper-button>
+        <paper-button raised hidden$="[[recent]]" on-tap="_toggleRecent">View Recent Funds</paper-button>
       </div>
     </div>
-    <div class="recent layout horizontal wrap center-justified">
+    <div class="recent layout horizontal wrap center-justified shady">
       <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
         <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
           <div class="card-content">

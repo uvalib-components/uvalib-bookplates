@@ -14,18 +14,50 @@
 <dom-module id="uvalib-bookplate-search">
   <template>
     <custom-style>
-      <style include="uvalib-theme iron-flex uvalib-card-style uvalib-page-style"></style>
+      <style include="uvalib-theme iron-flex uvalib-card-style uvalib-page-style">
+        paper-card {
+          max-width: 30%;
+
+        }
+        .card-content h3 {
+          text-transform: capitalize;
+          font-weight: 500;
+          line-height: 1.2;
+          padding-left: 0;
+        }
+        .bookplate-search.shady {
+          background-color: var(--uvalib-secondary-md-grey);
+          margin-top: calc(var(--uvalib-spacing-unit)*2);
+          padding: var(--uvalib-spacing-unit) 0;
+        }
+        .view-buttons {
+          margin: calc(var(--uvalib-spacing-unit)/2) var(--uvalib-spacing-unit);
+        }
+        .view-buttons paper-button {
+          height: calc(var(--uvalib-spacing-unit)*3);
+          background-color: white;
+        }
+        .results.shady {
+          padding-bottom: calc(var(--uvalib-spacing-unit)*2);
+        }
+      </style>
     </custom-style>
 
     <uva-library path="bookplates" last-response="{{bookplates}}"></uva-library>
     <iron-location query="{{_qs}}"></iron-location>
     <iron-query-params params-string="{{_qs}}" params-object="{{params}}"></iron-query-params>
+    <div>
+      <div class="bookplate-search shady layout horizontal wrap center-justified">
+        <uvalib-simple-search-box on-submit="_pullQuery" value="{{query}}"></uvalib-simple-search-box>
+        <div class="view-buttons">
+          <a tabindex="-1" href="/bookplates"><paper-button raised>View All Funds</paper-button></a>
+        </div>
+      </div>
+    </div>
 
-    <div class="upper">
-      <p>
-        Your search term "[[params.q]]" returned the following results:
-      </p>
-      <div class="results">
+    <div>
+      <h2>Your search term "[[params.q]]" returned the following results:</h2>
+      <div class="results layout horizontal wrap center-justified">
         <template is="dom-repeat" items="[[_searchBookplates(params.q,bookplates)]]">
           <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
             <div class="card-content">
@@ -39,15 +71,7 @@
       </div>
     </div>
 
-    <div class="lower">
-      <h2>Search E-bookplates funds again</h2>
-      <div class="layout horizontal">
-        <uvalib-simple-search-box on-submit="_pullQuery" value="{{query}}"></uvalib-simple-search-box>
-        <div>
-          <a tabindex="-1" href="/bookplates"><paper-button>View All Funds</paper-button></a>
-        </div>
-      </div>
-    </div>
+
 
   </template>
 
