@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="./uvalib-theme.uvalib-theme.html">
+<link rel="import" href="../uvalib-theme/uvalib-theme.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../paper-button/paper-button.html">
@@ -7,7 +7,7 @@
 <link rel="import" href="../uvalib-search-box/uvalib-simple-search-box.html">
 <link rel="import" href="../uva-models/uva-library.html">
 
-<dom-module id="uvalib-bookplate-search-browse">
+<dom-module id="uvalib-bookplate-browse">
   <template>
     <custom-style>
       <style include="uvalib-theme iron-flex"></style>
@@ -17,11 +17,14 @@
 
     <slot></slot>
     <div class="layout horizontal">
-      <uvalib-simple-search-box></uvalib-simple-search-box>
-      <div><paper-button>View All Funds</paper-button></div>
+      <uvalib-simple-search-box action="https://www.library.virginia.edu/bookplates/search" query-name="q"></uvalib-simple-search-box>
+      <div>
+        <paper-button hidden$="[[!recent]]" on-tap="_toggleRecent">View All Funds</paper-button>
+        <paper-button hidden$="[[recent]]" on-tap="_toggleRecent">View Recent Funds</paper-button>
+      </div>
     </div>
     <div class="recent">
-      <template is="dom-repeat" items="[[_recentBookplates(bookplates)]]">
+      <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
         <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
           <div class="card-content">
             <h3>[[item.title]]</h3>
@@ -36,33 +39,40 @@
 
   <script>
     /**
-     * `uvalib-bookplate-search-browse`
+     * `uvalib-bookplate-browse`
      *
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class UvalibBookplateSearchBrowse extends Polymer.Element {
-      static get is() { return 'uvalib-bookplate-search-browse'; }
+    class UvalibBookplateBrowse extends Polymer.Element {
+      static get is() { return 'uvalib-bookplate-browse'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'uvalib-bookplate-search-browse'
+          recent: {
+            type: Boolean,
+            value: true
           }
         };
       }
-      _recentBookplates(){
+      _viewBookplates(){
         if (this.bookplates)
-          // ToDo: when dates are added, need to sort on those
-          return this.bookplates.slice(1,8);
+          if (this.recent)
+            // ToDo: when dates are added, need to sort on those
+            return this.bookplates.slice(1,8);
+          else {
+            return this.bookplates;
+          }
       }
       _mkBookplateURL(fundID){
         return "/bookplates/"+fundID;
       }
+      _toggleRecent(){
+        this.recent = !this.recent;
+      }
     }
 
-    window.customElements.define(UvalibBookplateSearchBrowse.is, UvalibBookplateSearchBrowse);
+    window.customElements.define(UvalibBookplateBrowse.is, UvalibBookplateBrowse);
   </script>
 </dom-module>

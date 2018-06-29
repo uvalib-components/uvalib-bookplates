@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../uvalib-theme/uvalib-theme.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../uvalib-search-box/uvalib-simple-search-box.html">
+<link rel="import" href="../uva-models/uva-library.html">
+<link rel="import" href="../iron-location/iron-location.html">
+<link rel="import" href="../iron-location/iron-query-params.html">
+
+<dom-module id="uvalib-bookplate-search">
+  <template>
+    <custom-style>
+      <style include="uvalib-theme iron-flex"></style>
+    </custom-style>
+
+    <uva-library path="bookplates" last-response="{{bookplates}}"></uva-library>
+    <iron-location query="{{_qs}}"></iron-location>
+    <iron-query-params params-string="{{_qs}}" params-object="{{params}}"></iron-query-params>
+
+    <div class="layout horizontal">
+      [[params.query]]
+      <uvalib-simple-search-box on-submit="_pullQuery" value="{{query}}"></uvalib-simple-search-box>
+      <div>
+        <a tabindex="-1" href="/bookplates"><paper-button hidden$="[[!recent]]" on-tap="_toggleRecent">View All Funds</paper-button></a>
+      </div>
+    </div>
+
+    <div class="results">
+      <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
+        <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
+          <div class="card-content">
+            <h3>[[item.title]]</h3>
+          </div>
+          <div class="card-actions">
+            <a href="[[_mkBookplateURL(item.fundID)]]" tabindex="-1"><paper-button>View More</paper-button></a>
+          </div>
+        </paper-card>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `uvalib-bookplate-search`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UvalibBookplateSearch extends Polymer.Element {
+      static get is() { return 'uvalib-bookplate-search'; }
+      static get properties() {
+        return {
+          params: {
+            type:Object,
+            observer: '_updatequery'
+          },
+          query: {
+            type: String
+          }
+        };
+      }
+      _updatequery(){
+        this.query = this.params.query;
+      }
+      _pullQuery(e){
+        this.set('params.query', e.currentTarget.value);
+      }
+      _viewBookplates(){
+        if (this.bookplates)
+          if (this.recent)
+            // ToDo: when dates are added, need to sort on those
+            return this.bookplates.slice(1,8);
+          else {
+            return this.bookplates;
+          }
+      }
+      _mkBookplateURL(fundID){
+        return "/bookplates/"+fundID;
+      }
+    }
+
+    window.customElements.define(UvalibBookplateSearch.is, UvalibBookplateSearch);
+  </script>
+</dom-module>

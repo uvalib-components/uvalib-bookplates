@@ -1,6 +1,6 @@
 {
   "name": "uvalib-bookplates",
-  "main": "uvalib-bookplate-search-browse.html",
+  "main": "uvalib-bookplate-browse.html",
   "dependencies": {
     "uvalib-elements": "uvalib-components/uvalib-elements#master"
   },
