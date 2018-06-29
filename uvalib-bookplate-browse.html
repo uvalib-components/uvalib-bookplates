@@ -47,7 +47,7 @@
         <paper-button hidden$="[[recent]]" on-tap="_toggleRecent">View Recent Funds</paper-button>
       </div>
     </div>
-    <div class="recent layout horizontal wrap shady">
+    <div class="recent layout horizontal wrap center-justified shady">
       <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
         <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
           <div class="card-content">
