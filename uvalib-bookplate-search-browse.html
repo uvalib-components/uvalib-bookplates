@@ -1,19 +1,43 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./uvalib-theme.uvalib-theme.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../uvalib-search-box/uvalib-simple-search-box.html">
+<link rel="import" href="../uva-models/uva-library.html">
 
 <dom-module id="uvalib-bookplate-search-browse">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
+    <custom-style>
+      <style include="uvalib-theme iron-flex"></style>
+    </custom-style>
+
+    <uva-library path="bookplates" last-response="{{bookplates}}"></uva-library>
+
+    <slot></slot>
+    <div class="layout horizontal">
+      <uvalib-simple-search-box></uvalib-simple-search-box>
+      <div><paper-button>View All Funds</paper-button></div>
+    </div>
+    <div class="recent">
+      <template is="dom-repeat" items="[[_recentBookplates(bookplates)]]">
+        <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
+          <div class="card-content">
+            <h3>[[item.title]]</h3>
+          </div>
+          <div class="card-actions">
+            <a href="[[_mkBookplateURL(item.fundID)]]" tabindex="-1"><paper-button>View More</paper-button></a>
+          </div>
+        </paper-card>
+      </template>
+    </div>
   </template>
 
   <script>
     /**
      * `uvalib-bookplate-search-browse`
-     * 
+     *
      *
      * @customElement
      * @polymer
@@ -28,6 +52,14 @@
             value: 'uvalib-bookplate-search-browse'
           }
         };
+      }
+      _recentBookplates(){
+        if (this.bookplates)
+          // ToDo: when dates are added, need to sort on those
+          return this.bookplates.slice(1,8);
+      }
+      _mkBookplateURL(fundID){
+        return "/bookplates/"+fundID;
       }
     }
 

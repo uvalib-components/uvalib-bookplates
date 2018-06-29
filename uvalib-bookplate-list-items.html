@@ -15,7 +15,7 @@
     <template is="dom-if" if="[[_catresponse]]">
       <template is="dom-repeat" items="[[_catresponse.response.docs]]">
         <iron-ajax auto url="[[_getCoverURL(item.id)]]" last-response="{{item.coverimage}}"></iron-ajax>
-        <paper-card image="[[item.coverimage.image_base64]]">
+        <paper-card image="[[item.coverimage.image_base64]]" alt="bookcover image">
           <div class="card-content">
             <h3>[[item.title_display]]</h3>
           </div>
