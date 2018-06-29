@@ -21,10 +21,10 @@
 
     <div class="upper">
       <p>
-        Your search term "[[params.query]]" returned the following results:
+        Your search term "[[params.q]]" returned the following results:
       </p>
       <div class="results">
-        <template is="dom-repeat" items="[[_searchBookplates(params.query,bookplates)]]">
+        <template is="dom-repeat" items="[[_searchBookplates(params.q,bookplates)]]">
           <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
             <div class="card-content">
               <h3>[[item.title]]</h3>
@@ -72,10 +72,10 @@
         };
       }
       _updatequery(){
-        this.query = this.params.query;
+        this.query = this.params.q;
       }
       _pullQuery(e){
-        this.set('params.query', e.currentTarget.value);
+        this.set('params.q', e.currentTarget.value);
       }
       _searchBookplates(query){
         if (this.bookplates)
