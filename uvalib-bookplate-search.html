@@ -55,10 +55,10 @@
       </div>
     </div>
 
-    <div>
+    <div hidden$="[[!results]]">
       <h2>Your search term "[[params.q]]" returned the following results:</h2>
       <div class="results layout horizontal wrap center-justified">
-        <template is="dom-repeat" items="[[_searchBookplates(params.q,bookplates)]]">
+        <template is="dom-repeat" items="[[results]]">
           <paper-card image="[[item.bookplateImage.url]]" alt="[[item.bookplateImage.alt]]">
             <div class="card-content">
               <h3>[[item.title]]</h3>
@@ -94,6 +94,10 @@
           },
           query: {
             type: String
+          },
+          results: {
+            type: Array,
+            computed: '_searchBookplates(params.q,bookplates)'
           }
         });
       }
@@ -111,9 +115,10 @@
         this.set('params.q', e.currentTarget.value);
       }
       _searchBookplates(query){
-        if (this.bookplates)
+        var q = query.toLowerCase();
+        if (this.bookplates && q)
             // Todo: filter by query
-            return this.bookplates;
+            return this.bookplates.filter(bp => (bp.title && bp.title.toLowerCase().includes(q))||(bp.summary && bp.summary.toLowerCase().includes(q)));
       }
       _mkBookplateURL(fundID){
         return "/bookplates/"+fundID;
