@@ -83,7 +83,7 @@
         return parentTemplate;
       }
       _getFeedURL(fundCode) {
-        return "https://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D="+fundCode+"&sort_key=received";
+        return "https://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D="+fundCode+"&per_page=100&sort_key=received";
       }
       _getCoverURL(id) {
         return "https://api.devhub.virginia.edu/v1/library/catalog/covers/"+id;
