@@ -39,8 +39,8 @@
     <div class="bookplate-purchase-header shady">
         <h2>Virgo items purchased with this fund</h2>
     </div>
-    <div class="results layout horizontal wrap center-justified shady">
-      <template is="dom-if" if="[[_catresponse]]">
+    <template is="dom-if" if="[[_catresponse]]">
+      <div class="results layout horizontal wrap center-justified shady">
         <template is="dom-repeat" items="[[_catresponse.response.docs]]">
           <iron-ajax auto url="[[_getCoverURL(item.id)]]" last-response="{{item.coverimage}}"></iron-ajax>
           <paper-card image="[[item.coverimage.image_base64]]" alt="bookcover image">
@@ -52,8 +52,11 @@
             </div>
           </paper-card>
         </template>
+      </div>
+      <template is="dom-if" if="[[_overflow(searchCount)]]">
+        <p><a href="[[_getLinkURL(fundCode)]]">View all items purchased with this fund</a></p>
       </template>
-    </div>
+    </template>
   </template>
 
   <script>
@@ -72,6 +75,10 @@
           fundId: {
             type: String,
             value: 'WYLLIE-ER00621'
+          },
+          searchCount: {
+            type: Number,
+            computed: '_getCount(_catresponse)'
           }
         });
       }
@@ -82,6 +89,9 @@
         parentTemplate.content.insertBefore(childTemplate.content,null);
         return parentTemplate;
       }
+      _getLinkURL(fundCode) {
+        return "http://search.lib.virginia.edu/catalog?catalog_select=catalog&f[fund_code_facet][]="+fundCode;
+      }
       _getFeedURL(fundCode) {
         return "https://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D="+fundCode+"&per_page=100&sort_key=received";
       }
@@ -90,6 +100,17 @@
       }
       _mkItemURL(id) {
         return "https://search.lib.virginia.edu/catalog/"+id;
+      }
+      _getCount(res) {
+        if (res) {
+          return res.response.numFound;
+        }
+        else {
+          return null;
+        }
+      }
+      _overflow(count) {
+        return (count>100);
       }
     }
 
