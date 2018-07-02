@@ -8,6 +8,9 @@
 <link rel="import" href="../uvalib-search-box/uvalib-simple-search-box.html">
 <link rel="import" href="../uva-models/uva-library.html">
 <link rel="import" href="../uvalib-theme/uvalib-card-style.html">
+<link rel="import" href="../iron-location/iron-location.html">
+<link rel="import" href="../iron-location/iron-query-params.html">
+
 <dom-module id="uvalib-bookplate-browse">
   <template>
     <custom-style>
@@ -60,6 +63,9 @@
       </style>
     </custom-style>
 
+    <iron-location query="{{_qs}}"></iron-location>
+    <iron-query-params params-string="{{_qs}}" params-object="{{params}}"></iron-query-params>
+
     <uva-library path="bookplates" last-response="{{bookplates}}"></uva-library>
 
     <slot class="bookplate-intro"></slot>
@@ -100,6 +106,10 @@
           recent: {
             type: Boolean,
             value: true
+          },
+          params: {
+            type:Object,
+            observer: '_triggerViewAll'
           }
         });
       }
@@ -110,6 +120,9 @@
         parentTemplate.content.insertBefore(childTemplate.content,null);
         return parentTemplate;
        }
+      _triggerViewAll() {
+        if (this.params.viewAll) this.recent = false; 
+      }
       _altFallback(alt){
         return (alt)? alt:"University of Virginia Library Bookplate image";
       }
