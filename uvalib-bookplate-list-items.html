@@ -22,6 +22,10 @@
         line-height: 1.2;
         padding-left: 0;
       }
+      .card-content img {
+        height: 175px;
+        margin-right: var(--uvalib-spacing-unit);
+      }
       .bookplate-purchase-header.shady {
         background-color: var(--uvalib-secondary-md-grey);
         margin-bottom: 0;
@@ -43,9 +47,12 @@
       <div class="results layout horizontal wrap center-justified shady">
         <template is="dom-repeat" items="[[_catresponse.response.docs]]">
           <iron-ajax auto url="[[_getCoverURL(item.id)]]" last-response="{{item.coverimage}}"></iron-ajax>
-          <paper-card image="[[item.coverimage.image_base64]]" alt="bookcover image">
+          <paper-card>
             <div class="card-content">
-              <h3>[[item.title_display]]</h3>
+              <div class="layout horizontal">
+                <img src="[[item.coverimage.image_base64]]" alt="bookcover image" class="flex"/>
+                <h3 class="flex-2">[[item.title_display]]</h3>
+              </div>
             </div>
             <div class="card-actions">
               <a href="[[_mkItemURL(item.id)]]" tabindex="-1"><paper-button>View More</paper-button></a>
