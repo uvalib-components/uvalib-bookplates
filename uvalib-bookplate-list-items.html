@@ -61,7 +61,7 @@
         </template>
       </div>
       <template is="dom-if" if="[[_overflow(searchCount)]]">
-        <p><a href="[[_getLinkURL(fundId,searchCount)]]">View all items purchased with this fund</a></p>
+        <p><a href="[[_getLinkURL(fundId,searchCount)]]" tabindex="-1"><paper-button>View all items purchased with this fund</paper-button></a></p>
       </template>
     </template>
   </template>
