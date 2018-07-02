@@ -54,7 +54,7 @@
         </template>
       </div>
       <template is="dom-if" if="[[_overflow(searchCount)]]">
-        <p><a href="[[_getLinkURL(fundCode)]]">View all items purchased with this fund</a></p>
+        <p><a href="[[_getLinkURL(fundId,searchCount)]]">View all items purchased with this fund</a></p>
       </template>
     </template>
   </template>
@@ -90,7 +90,7 @@
         return parentTemplate;
       }
       _getLinkURL(fundCode) {
-        return "http://search.lib.virginia.edu/catalog?catalog_select=catalog&f[fund_code_facet][]="+fundCode;
+        return "http://search.lib.virginia.edu/catalog?catalog_select=catalog&f[fund_code_facet][]="+this.fundId;
       }
       _getFeedURL(fundCode) {
         return "https://search.lib.virginia.edu/catalog.json?f%5Bfund_code_facet%5D%5B%5D="+fundCode+"&per_page=100&sort_key=received";
