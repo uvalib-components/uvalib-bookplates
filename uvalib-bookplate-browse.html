@@ -78,7 +78,7 @@
     </div>
     <div class="recent layout horizontal wrap center-justified shady">
       <template is="dom-repeat" items="[[_viewBookplates(bookplates,recent)]]">
-        <paper-card hidden$="[[!item.bookplateResults]]" image="[[_imageFallback(item.bookplateImage.url)]]" alt="[[_altFallback(item.bookplateImage.alt)]]">
+        <paper-card image="[[_imageFallback(item.bookplateImage.url)]]" alt="[[_altFallback(item.bookplateImage.alt)]]">
           <div class="card-content">
             <h3>[[item.title]]</h3>
           </div>
