@@ -13,6 +13,6 @@
     "iron-a11y-keys-behavior": "^v2.0.0",
     "paper-styles": "^2.0.0",
     "iron-resizable-behavior": "^v2.0.0",
-    "uva-accordion": "2.0.13"
+    "uva-accordion": "2.0.14"
   }
 }

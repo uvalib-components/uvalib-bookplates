@@ -63,7 +63,7 @@
       <h2>Your search term "[[params.q]]" returned the following results:</h2>
       <div class="results layout horizontal wrap center-justified">
         <template is="dom-repeat" items="[[results]]">
-          <paper-card hidden$="[[!item.bookplateResults]]" image="[[_imageFallback(item.bookplateImage.url)]]" alt="[[_altFallback(item.bookplateImage.alt)]]">
+          <paper-card image="[[_imageFallback(item.bookplateImage.url)]]" alt="[[_altFallback(item.bookplateImage.alt)]]">
             <div class="card-content">
               <h3>[[item.title]]</h3>
             </div>
@@ -135,7 +135,7 @@
       _pullQuery(e){
         this.set('params.q', e.currentTarget.value);
       }
-      _searchBookplates(query){
+      _searchBookplates(query){    
         if (query) {
           var q = query.toLowerCase();
           if (this.bookplates && q)
